@@ -14,6 +14,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.sql.DataSource;
 
+import fotogramas.bbdd.BeanDao;
 import fotogramas.controlador.Accion;
 import fotogramas.modelo.beans.*;
 
@@ -27,15 +28,14 @@ public class AccionLogin implements Accion {
 	// Aquí se deben declarar las propiedades de la acción
 	private String vista;
 	private final String vistaOK = "WEB-INF/concurso.jsp";
-	private final String vistaError = "gesError.jsp";
-	//private final String vistaForm= "login.jsp";
+	private final String vistaError = "WEB-INF/gesError.jsp";
 	private BeanUsuario modelo = new BeanUsuario();
 	
 	// Estas variables las necesitan todas las acciones 
 	private ServletContext sc;
 	private HttpSession sesion;
 	private DataSource DS;	
-	private fotogramas.modelo.beans.BeanError error;
+	private BeanError error;
 	
 	/**
 	 * Constructor por defecto
@@ -55,40 +55,37 @@ public class AccionLogin implements Accion {
 			HttpServletResponse response) throws ServletException, IOException 
 	{
 		boolean resultado = true;
-		Connection conexion = null;
-		Statement st = null;
-		ResultSet rs = null;
-		//Se debe implementar ajustándose al uso de datasource	
-		String login, clave;
-		
-		//Si la accion es login, se valida el login.
-		//Se obtienen login y clave
-		login = request.getParameter("login");
-		clave = request.getParameter("clave");
+		BeanDao beanDao = new BeanDao(DS);
+		String login = request.getParameter("login");
+		String clave = request.getParameter("clave");
 		try {
-			conexion = DS.getConnection();
-			st = conexion.createStatement();
-			rs = st.executeQuery("select login,clave from usuarios where login = '"+login+"'");
-			if (rs.next()) {
-				if (!rs.getString("clave").equals(clave)) {
-					error = new BeanError(2,"La clave no coincide.");
-					resultado = false;
-				}
-			}
-			else
-			{
-				error = new BeanError(3,"El login no existe.");
-				resultado = false;
-			}
+			beanDao.getConexion();
+			this.modelo = beanDao.obtenerUsuario(login, clave);
+			
 		} catch (SQLException e) {
 			error = new BeanError(1,"Error en conexión a base de datos",e);
 			resultado = false;
+			e.printStackTrace();
+		} catch (BeanError e) {
+			resultado = false;
+			error = new BeanError(2,"Error con el BeanDao",e);
+			e.printStackTrace();
+		}finally{
+			try {
+				beanDao.close();
+			} catch (SQLException e) {
+				resultado = false;
+				error = new BeanError(3,"Error al cerrar la conexion con el beandao",e);
+				e.printStackTrace();
+			}
 		}
 		
-		if (resultado==true)
+		if (resultado==true){
 			vista = vistaOK;
-		else
+		    sesion.setAttribute("usuario", modelo);
+		}else{
 			vista = vistaError;
+		}
 		return resultado;
 	}
 

@@ -21,13 +21,35 @@ public abstract class FactoriaAcciones {
 		Accion accionF = new AccionIndex();
 	    // Devuelve objetos Accion en función del parámetro de acción proporcionado 
 		// Este código puede modificarse a libre elección
-	    if (accion.equals("login"))
-	      accionF = new AccionLogin();
-	    if (accion.equals("entrar"))
-	      accionF = new AccionLogin();
-	    if (accion.equals("volver"))
-	      accionF = new AccionIndex();
 
+		if (accion != null) {
+			switch (accion) {
+			case "login":
+				accionF = new AccionLogin();
+				break;
+			case "registro":
+				//accionF = new AccionRegistrar();
+				break;
+			case "concursar":
+				//accionF = new AccionConcursar();
+				break;
+			case "consultarRegistrado":
+				//accionF = new AccionConsultarRegistrado();
+				break;
+			case "index":
+				accionF = new AccionIndex();
+				break;
+			case "salir":
+				//accionF = new AccionSalir();
+				break;
+			case "responder":
+				//accionF = new AccionResponder();
+				break;
+			case "consultarAnonimo":
+				//accionF = new AccionConsultarAnonimo();
+			}
+		}
+		
 	    return accionF;
 	  }
 

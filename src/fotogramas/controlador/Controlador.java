@@ -51,12 +51,13 @@ public class Controlador extends HttpServlet {
 	// aplicación. 
 	    try {
 	    	InitialContext initCtx = new InitialContext();
-	    	setDsBdfotogramas((DataSource) initCtx.lookup("java:jboss/datasources/dsbdfotogramas"));
+	    	setDsBdfotogramas((DataSource) initCtx.lookup("java:jboss/datasources/dsfperdido_LanzaMunoz"));
 	    	if (getDsBdfotogramas()==null)
 	    		System.out.println("dsBdfotogramas es null.");
 	    	sc = config.getServletContext();
 	    	// El datasource se almacena a nivel de aplicación.
 	    	sc.setAttribute("dsBdfotogramas", getDsBdfotogramas());
+	    	sc.setAttribute("iniciada", "true");
 	    } 
 	    catch(NamingException ne)
 	    {
@@ -64,6 +65,7 @@ public class Controlador extends HttpServlet {
 	        // se envía un mensaje de error hacia la salida de log del servidor
 	        // de aplicaciones.
 	        System.out.println("Error: Método init(). tipo NamingException.");
+	        sc.setAttribute("iniciada", "false");
 	    } 
 	}
 
@@ -106,6 +108,7 @@ public class Controlador extends HttpServlet {
      */
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if (sc.getAttribute("iniciada").equals("true")){
 		//Se obtiene el objeto de ámbito sesión
 		HttpSession sesion = request.getSession();
 	    // Obtener un objeto de ayuda para la solicitud
@@ -135,6 +138,9 @@ public class Controlador extends HttpServlet {
 	    {
 	    // Si la ejecución ha generado un error, procesarlo mediante el gestor centralizado de errores
 	      gesError(accion.getVista(),accion.getError(),request,response);
+	    }
+	    }else {
+	    	gesError("gesError.jsp", new BeanError(1, "Aplicación no iniciada correctamente"), request, response);
 	    }
 	    
 	}

@@ -5,6 +5,7 @@
 <title>El Fotograma Perdido MVC v1 DS</title>
 </head>
 <body>
+
 <form action="controlador" method="post">
 <input type="hidden" name="accion" value="login">
 Si ya es usuario de la aplicación, introduzca login y clave<br> 
@@ -19,5 +20,35 @@ Si aún no es usuario de la aplicación:  <br>
 <input name="registrar" value="registrar"
 	type="submit" style="width: 84px; height: 33px">
 </form>
+
+<hr>
+
+
+	<br>
+
+	<form action="/fperdidoLanzaMunoz/controlador" method="post">
+		<label for="login2">Login usuario:</label><input id="login2" type="text" name="login" maxlength="12" placeholder="Máximo 12" required="required" pattern="\S*"><br>
+		<label for="clave">Clave:</label><input id="clave" type="password" name="clave" maxlength="12" placeholder="Máximo 12" required="required" autocomplete="off" pattern="\S*"><br>
+		<input type="hidden" name="accion" value="login">
+		<input type="submit" value="Login">
+	</form>
+	
+	<form action="/fperdidoLanzaMunoz/controlador" method="post">
+		<label for="login2">Login usuario:</label><input id="login2" type="text" name="login" maxlength="12" placeholder="Máximo 12" required="required" pattern="\S*"><br>
+		<label for="clave">Clave:</label><input id="clave" type="password" name="clave" maxlength="12" placeholder="Máximo 12" required="required" autocomplete="off" pattern="\S*"><br>
+		<input type="hidden" name="accion" value="registro">
+		<input type="submit" value="Registro">
+	</form>
+	
+	<form action="/fperdidoLanzaMunoz/controlador" method="post">
+		<input type="hidden" name="accion" value="index">
+		<input type="submit" value="Volver al inicio">
+	</form>
+	
+	<form action="/fperdidoLanzaMunoz/controlador" method="post">
+		<input type="hidden" name="accion" value="consultarAnonimo">
+		<input type="submit" value="Consulta Ranking">
+	</form>
+	
 </body>
 </html>

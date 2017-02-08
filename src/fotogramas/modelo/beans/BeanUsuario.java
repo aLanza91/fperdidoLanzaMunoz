@@ -29,9 +29,30 @@ public class BeanUsuario implements Serializable {
 	{
 		
 	}
-	
 	/**
-	 * Constructor con parámetros
+	 * Constructor login.
+	 */
+	public BeanUsuario(String login){
+		this.login = login;
+		this.clave = "";
+		this.nombre = "";
+		this.apellidos = "";
+		this.email = "";
+		this.edad = 0;
+	 }
+	/**
+	 * Constructor login y clave
+	 */
+	public BeanUsuario(String login,String clave){
+		this.login = login;
+		this.clave = clave;
+		this.nombre = "";
+		this.apellidos = "";
+		this.email = "";
+		this.edad = 0;
+	 }
+	/**
+	 * Constructor con parï¿½metros
 	 */
 	public BeanUsuario(String login, String clave, String nombre, String apellidos, String email, int edad)
 	{
@@ -127,6 +148,6 @@ public class BeanUsuario implements Serializable {
 		return encontrado;
 	}
 
-	//Métodos getter y setter
+	//Mï¿½todos getter y setter
 	
 }
