@@ -8,7 +8,7 @@
 <title>El Fotograma Perdido MVC v1</title>
 </head>
 <body>
-Aquí se produce la petición de login y clave para un usuario registrado.
+Aquí se produce la petición de login y clave para un usuario registrado
 <%
  BeanError error = (BeanError) request.getAttribute("error");
  if (error!=null)
