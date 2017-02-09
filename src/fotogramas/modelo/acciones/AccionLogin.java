@@ -62,14 +62,14 @@ public class AccionLogin implements Accion {
 			beanDao.getConexion();
 			this.modelo = beanDao.obtenerUsuario(login, clave);
 			
-		} catch (SQLException e) {
-			error = new BeanError(1,"Error en conexión a base de datos",e);
+		} catch (SQLException sqle) {
+			error = new BeanError(sqle.getErrorCode(),(sqle).getMessage(),sqle);
 			resultado = false;
-			e.printStackTrace();
-		} catch (BeanError e) {
+			sqle.printStackTrace();
+		} catch (BeanError be) {
 			resultado = false;
-			error = new BeanError(2,"Error con el BeanDao",e);
-			e.printStackTrace();
+			error = new BeanError(2,be.getMensError(),be);
+			be.printStackTrace();
 		}finally{
 			try {
 				beanDao.close();

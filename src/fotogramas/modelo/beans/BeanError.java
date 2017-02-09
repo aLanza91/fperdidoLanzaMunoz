@@ -80,5 +80,7 @@ public class BeanError extends Exception implements Serializable{
 	public Exception getExcepcion() {
 		return excepcion;
 	}
-
+	public String toString() {
+		return "Código error: " + this.codError + ", " + this.mensError;
+	}
 }

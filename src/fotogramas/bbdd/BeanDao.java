@@ -106,6 +106,7 @@ public class BeanDao {
 			st = conexion.createStatement();
 			ResultSet rs = st.executeQuery("SELECT login, clave from usuarios where login = '" + login + "'");
 			// Se comprueba si existe el login
+			
 			if (rs.next()) {
 				// Se comprueba si no coincide la clave y si coincide se obtiene
 				// el nombre
